@@ -1,4 +1,4 @@
-package client;
+package mcpr.hellops_client;
 import commun.Jeton;
 import java.util.Scanner;
 
