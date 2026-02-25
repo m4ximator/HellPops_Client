@@ -40,12 +40,29 @@ public class Client {
 			switch (choix) {
 				case "1":
 					System.out.println("\n--- INSCRIPTION ---");
-					System.out.print("Login : ");
-					String newLogin = scan.nextLine();
-					System.out.print("Mot de passe : ");
-					String newPassword = scan.nextLine();
-					stubAuth.inscription(newLogin, newPassword);
-					System.out.println("Inscription réussie !");
+
+					boolean inscription_reussie = false;
+
+					while (!inscription_reussie) {
+
+						System.out.print("Login : ");
+						String newLogin = scan.nextLine();
+						System.out.print("Mot de passe : ");
+						String newPassword = scan.nextLine();
+
+						boolean inscription = stubAuth.inscription(newLogin, newPassword);
+
+						if (!inscription) {
+							System.out.println("Inscription refusée, login déjà existant !");
+							inscription_reussie = false;
+						}
+
+						else {
+							System.out.println("Inscription réussie !");
+							inscription_reussie = true;
+						}
+					}
+
 					break;
 
 				case "2":
@@ -174,7 +191,9 @@ public class Client {
 		if (modifie != null) {
 			System.out.println("Modification réussie !");
 			System.out.println(modifie.toString());
-		} else {
+		}
+
+		else {
 			System.out.println("Échec : Ticket introuvable ou accès refusé.");
 		}
 	}
