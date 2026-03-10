@@ -193,7 +193,7 @@ public class Console {
 
 				case "8":
 					if (jeton.getRole() == Role.AGENT) {
-						//TODO
+						consulterTicketsAssignes(ticket,jeton);
 					} else {
 						System.out.println("Permission non accordée.");
 					}
@@ -325,7 +325,7 @@ public class Console {
 		}
 	}
 
-	private static void consulterTicketsAssignés(ITicketService ticket, Jeton jeton) throws Exception {
+	private static void consulterTicketsAssignes(ITicketService ticket, Jeton jeton) throws Exception {
 
 		System.out.println("\n--- TICKET ASSIGNÉ ---");
 
