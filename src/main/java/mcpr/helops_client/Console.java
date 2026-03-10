@@ -1,9 +1,6 @@
 package mcpr.helops_client;
 
-import mcpr.hellpops_interfaces.Incident;
-import mcpr.hellpops_interfaces.IAuthService;
-import mcpr.hellpops_interfaces.ITicketService;
-import mcpr.hellpops_interfaces.Jeton;
+import mcpr.hellpops_interfaces.*;
 
 import java.rmi.Naming;
 import java.util.List;
@@ -139,6 +136,16 @@ public class Console {
 			System.out.println("3. Consulter les détails d'un ticket");
 			System.out.println("4. Modifier un ticket");
 			System.out.println("5. Se déconnecter");
+
+			// Affichage conditionnel pour role AGENT
+			if (jeton.getRole() == Role.AGENT) {
+				System.out.println("--- Espace Agent ---");
+				System.out.println("6. Voir les tickets en attente (OPEN)");
+				System.out.println("7. Prendre en charge un ticket (Assigner)");
+				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
+
+			}
+
 			System.out.print("Choisissez une option : ");
 
 			String choix = scan.nextLine();
@@ -165,6 +172,31 @@ public class Console {
 					auth.deconnexion(jeton);
 					jeton = null;
 					System.out.println("Déconnexion réussie.");
+					break;
+
+				// Action AGENT
+				case "6":
+					if (jeton.getRole() == Role.AGENT) {
+						//TODO
+					} else {
+						System.out.println("Permission non accordée.");
+					}
+					break;
+
+				case "7":
+					if (jeton.getRole() == Role.AGENT) {
+						//TODO
+					} else {
+						System.out.println("Permission non accordée.");
+					}
+					break;
+
+				case "8":
+					if (jeton.getRole() == Role.AGENT) {
+						//TODO
+					} else {
+						System.out.println("Permission non accordée.");
+					}
 					break;
 
 				default:
