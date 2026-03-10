@@ -1,9 +1,6 @@
 package mcpr.helops_client;
 
-import mcpr.hellpops_interfaces.Incident;
-import mcpr.hellpops_interfaces.IAuthService;
-import mcpr.hellpops_interfaces.ITicketService;
-import mcpr.hellpops_interfaces.Jeton;
+import mcpr.hellpops_interfaces.*;
 
 import java.rmi.Naming;
 import java.util.List;
@@ -139,6 +136,16 @@ public class Console {
 			System.out.println("3. Consulter les détails d'un ticket");
 			System.out.println("4. Modifier un ticket");
 			System.out.println("5. Se déconnecter");
+
+			// Affichage conditionnel pour role AGENT
+			if (jeton.getRole() == Role.AGENT) {
+				System.out.println("--- Espace Agent ---");
+				System.out.println("6. Voir les tickets en attente (OPEN)");
+				System.out.println("7. Prendre en charge un ticket (Assigner)");
+				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
+
+			}
+
 			System.out.print("Choisissez une option : ");
 
 			String choix = scan.nextLine();
@@ -165,6 +172,31 @@ public class Console {
 					auth.deconnexion(jeton);
 					jeton = null;
 					System.out.println("Déconnexion réussie.");
+					break;
+
+				// Action AGENT
+				case "6":
+					if (jeton.getRole() == Role.AGENT) {
+						consulterTicketsEnAttente(ticket,jeton);
+					} else {
+						System.out.println("Permission non accordée.");
+					}
+					break;
+
+				case "7":
+					if (jeton.getRole() == Role.AGENT) {
+						AssignerTicket(scan,ticket,jeton);
+					} else {
+						System.out.println("Permission non accordée.");
+					}
+					break;
+
+				case "8":
+					if (jeton.getRole() == Role.AGENT) {
+						//TODO
+					} else {
+						System.out.println("Permission non accordée.");
+					}
 					break;
 
 				default:
@@ -264,5 +296,45 @@ public class Console {
 		}
 	}
 
+	private static void consulterTicketsEnAttente(ITicketService ticket, Jeton jeton) throws Exception {
 
+		System.out.println("\n--- Tickets en attente ---");
+
+		List<Incident> tickets = ticket.consulterIncidentEnAttente(jeton);
+
+		if (tickets != null && !tickets.isEmpty()) {
+			tickets.forEach(System.out::println);
+		} else {
+			System.out.println("Il n'y a aucun ticket en attente");
+		}
+	}
+
+	private static void AssignerTicket(Scanner scan, ITicketService ticket, Jeton jeton) throws Exception {
+
+		System.out.println("\n--- ASSIGNER UN TICKET ---");
+
+		int id = demanderIdValide(scan);
+		if (id == -1) return;
+
+		String assigne = ticket.attribuerIncident(jeton, id);
+
+		if (assigne != null) {
+			System.out.println("Assignation réussie !");
+		} else {
+			System.out.println("Échec Assignation.");
+		}
+	}
+
+	private static void consulterTicketsAssignés(ITicketService ticket, Jeton jeton) throws Exception {
+
+		System.out.println("\n--- TICKET ASSIGNÉ ---");
+
+		List<Incident> tickets = ticket.consulterIncidentAgent(jeton);
+
+		if (tickets != null && !tickets.isEmpty()) {
+			tickets.forEach(System.out::println);
+		} else {
+			System.out.println("Il n'y a aucun ticket vous étant assigné");
+		}
+	}
 }
