@@ -317,12 +317,9 @@ public class Console {
 		if (id == -1) return;
 
 		String assigne = ticket.attribuerIncident(jeton, id);
+		System.out.println(assigne);
 
-		if (assigne != null) {
-			System.out.println("Assignation réussie !");
-		} else {
-			System.out.println("Échec Assignation.");
-		}
+
 	}
 
 	private static void consulterTicketsAssignes(ITicketService ticket, Jeton jeton) throws Exception {
