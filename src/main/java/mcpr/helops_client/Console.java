@@ -143,6 +143,7 @@ public class Console {
 				System.out.println("6. Voir les tickets en attente (OPEN)");
 				System.out.println("7. Prendre en charge un ticket (Assigner)");
 				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
+				System.out.println("9. Voir tous les tickets");
 
 			}
 
@@ -199,6 +200,15 @@ public class Console {
 					}
 					break;
 
+				case "9":
+					if (jeton.getRole() == Role.AGENT) {
+						consulterTouslesIncidents(ticket, jeton);
+					} else {
+						System.out.println("Permission non accordée.");
+					}
+					break;
+
+
 				default:
 					System.out.println("Choix invalide.");
 			}
@@ -227,19 +237,6 @@ public class Console {
 		}
 
 		System.out.println(ticket.creerIncident(jeton, categorie, titre, description));
-	}
-
-	private static void consulterTickets(ITicketService ticket, Jeton jeton) throws Exception {
-
-		System.out.println("\n--- MES TICKETS ---");
-
-		List<Incident> tickets = ticket.consulterListeIncident(jeton);
-
-		if (tickets != null && !tickets.isEmpty()) {
-			tickets.forEach(System.out::println);
-		} else {
-			System.out.println("Vous n'avez aucun ticket.");
-		}
 	}
 
 	private static int demanderIdValide(Scanner scan) {
@@ -296,6 +293,19 @@ public class Console {
 		}
 	}
 
+	private static void consulterTickets(ITicketService ticket, Jeton jeton) throws Exception {
+
+		System.out.println("\n--- MES TICKETS ---");
+
+		List<Incident> tickets = ticket.consulterListeIncident(jeton);
+
+		if (tickets != null && !tickets.isEmpty()) {
+			tickets.forEach(System.out::println);
+		} else {
+			System.out.println("Vous n'avez aucun ticket.");
+		}
+	}
+
 	private static void consulterTicketsEnAttente(ITicketService ticket, Jeton jeton) throws Exception {
 
 		System.out.println("\n--- Tickets en attente ---");
@@ -306,6 +316,21 @@ public class Console {
 			tickets.forEach(System.out::println);
 		} else {
 			System.out.println("Il n'y a aucun ticket en attente");
+		}
+	}
+
+	private static void consulterTouslesIncidents(ITicketService ticket, Jeton jeton) throws Exception {
+
+		System.out.println("\n Liste de tous les tickets");
+
+		List<Incident> tickets = ticket.consulterTouslesIncidents(jeton);
+
+		if (tickets != null && !tickets.isEmpty()) {
+			tickets.forEach(System.out::println);
+		}
+
+		else {
+			System.out.println("Il n'y a aucun ticket ouvert ou assigné");
 		}
 	}
 
