@@ -144,7 +144,7 @@ public class Console {
 				System.out.println("7. Prendre en charge un ticket (Assigner)");
 				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
 				System.out.println("9. Voir tous les tickets");
-
+				System.out.println("10. Résoudre un ticket");
 			}
 
 			System.out.print("Choisissez une option : ");
@@ -208,6 +208,14 @@ public class Console {
 					}
 					break;
 
+				case "10":
+					if (jeton.getRole() == Role.AGENT) {
+						resoudreTicket(scan,ticket,jeton);
+					} else {
+						System.out.println("Permission non accordée.");
+
+					}
+					break;
 
 				default:
 					System.out.println("Choix invalide.");
@@ -291,6 +299,19 @@ public class Console {
 		} else {
 			System.out.println("Échec modification.");
 		}
+	}
+
+	public static void resoudreTicket (Scanner scan, ITicketService ticket, Jeton jeton) throws Exception {
+
+		int id = demanderIdValide(scan);
+		if (id == -1) return;
+
+		System.out.println("Message de résolution :");
+		String message = scan.nextLine();
+
+		String resultat = ticket.resoudreIncident(jeton, id, message);
+		System.out.println(resultat);
+
 	}
 
 	private static void consulterTickets(ITicketService ticket, Jeton jeton) throws Exception {
