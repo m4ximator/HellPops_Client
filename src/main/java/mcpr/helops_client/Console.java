@@ -3,6 +3,7 @@ package mcpr.helops_client;
 import mcpr.hellpops_interfaces.*;
 
 import java.rmi.Naming;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -145,6 +146,7 @@ public class Console {
 				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
 				System.out.println("9. Voir tous les tickets");
 				System.out.println("10. Résoudre un ticket");
+				System.out.println("11. Statistiques");
 			}
 
 			System.out.print("Choisissez une option : ");
@@ -211,6 +213,15 @@ public class Console {
 				case "10":
 					if (jeton.getRole() == Role.AGENT) {
 						resoudreTicket(scan,ticket,jeton);
+					} else {
+						System.out.println("Permission non accordée.");
+
+					}
+					break;
+
+				case "11":
+					if (jeton.getRole() == Role.AGENT) {
+						System.out.println(Arrays.toString(ticket.getStatistiques(jeton)));
 					} else {
 						System.out.println("Permission non accordée.");
 
