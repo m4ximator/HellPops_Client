@@ -281,7 +281,7 @@ public class Console {
 
 		if (incident != null) {
 			System.out.println(incident);
-			System.out.println("Description : " + incident.getDescription());
+
 		} else {
 			System.out.println("Ticket introuvable.");
 		}
