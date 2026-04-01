@@ -221,7 +221,10 @@ public class Console {
 
 				case "11":
 					if (jeton.getRole() == Role.AGENT) {
-						System.out.println(Arrays.toString(ticket.getStatistiques(jeton)));
+						String chaine = Arrays.toString(ticket.getStatistiques(jeton));
+						chaine = chaine.replace("[","");
+						chaine = chaine.replace("]","");
+						System.out.println(chaine);
 					} else {
 						System.out.println("Permission non accordée.");
 
