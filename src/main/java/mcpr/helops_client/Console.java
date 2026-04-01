@@ -131,25 +131,7 @@ public class Console {
 
 		while (jeton != null) {
 
-			System.out.println("\n=== MENU PRINCIPAL ===");
-			System.out.println("1. Créer un ticket");
-			System.out.println("2. Consulter mes tickets");
-			System.out.println("3. Consulter les détails d'un ticket");
-			System.out.println("4. Modifier un ticket");
-			System.out.println("5. Se déconnecter");
-
-			// Affichage conditionnel pour role AGENT
-			if (jeton.getRole() == Role.AGENT) {
-				System.out.println("--- Espace Agent ---");
-				System.out.println("6. Voir les tickets en attente (OPEN)");
-				System.out.println("7. Prendre en charge un ticket (Assigner)");
-				System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
-				System.out.println("9. Voir tous les tickets");
-				System.out.println("10. Résoudre un ticket");
-				System.out.println("11. Statistiques");
-			}
-
-			System.out.print("Choisissez une option : ");
+			afficherMenuIncidents(jeton);
 
 			String choix = scan.nextLine();
 
@@ -235,6 +217,30 @@ public class Console {
 					System.out.println("Choix invalide.");
 			}
 		}
+	}
+
+	private static void afficherMenuIncidents(Jeton jeton) {
+
+		System.out.println("\n=== MENU PRINCIPAL ===");
+		System.out.println("1. Créer un ticket");
+		System.out.println("2. Consulter mes tickets");
+		System.out.println("3. Consulter les détails d'un ticket");
+		System.out.println("4. Modifier un ticket");
+		System.out.println("5. Se déconnecter");
+
+		// Affichage conditionnel pour role AGENT
+		if (jeton.getRole() == Role.AGENT) {
+			System.out.println("--- Espace Agent ---");
+			System.out.println("6. Voir les tickets en attente (OPEN)");
+			System.out.println("7. Prendre en charge un ticket (Assigner)");
+			System.out.println("8. Voir ses tickets assignés (ASSIGNED)");
+			System.out.println("9. Voir tous les tickets");
+			System.out.println("10. Résoudre un ticket");
+			System.out.println("11. Statistiques");
+		}
+
+		System.out.print("Choisissez une option : ");
+
 	}
 
 	private static void creerTicket(Scanner scan, ITicketService ticket, Jeton jeton) throws Exception {
